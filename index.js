@@ -11,7 +11,7 @@ const corsOptions = {
 }
 
 const Task = require('./src/model/TaskModel')
-
+const User = require('./src/model/UsreModel')
 //middleware
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -34,6 +34,12 @@ ConnectDB()
         const allTask = await Task.find();
         res.send(allTask)
     })
+
+    app.get('/users', async(req,res)=>{
+        const allUser = await User.find();
+        res.send(allUser)
+    })
+
     app.get('/', (req,res)=>{
         res.send('Server is running')
     })
