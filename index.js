@@ -21,10 +21,11 @@ ConnectDB()
 
     app.post('/tasks', async(req,res)=>{
         try{
-            const taskData = req.body;
-            const createTask = await new Task(taskData);
-            const addTaskInDb = await createTask.save();
-            res.send("succeed")
+            const task = req.body;
+            console.log(task)
+            const createTask = new Task(task);
+            const addTaskinDB = await createTask.save();
+            res.send('succeed')
         }catch(err){
             res.send(err)
         }
