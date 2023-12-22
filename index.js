@@ -22,7 +22,6 @@ ConnectDB()
     app.post('/tasks', async(req,res)=>{
         try{
             const task = req.body;
-            console.log(task)
             const createTask = new Task(task);
             const addTaskinDB = await createTask.save();
             res.send('succeed')
@@ -31,6 +30,10 @@ ConnectDB()
         }
     })
 
+    app.get('/tasks', async(req,res)=>{
+        const allTask = await Task.find();
+        res.send(allTask)
+    })
     app.get('/', (req,res)=>{
         res.send('Server is running')
     })
