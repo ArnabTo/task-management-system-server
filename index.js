@@ -5,7 +5,7 @@ const cors = require('cors');
 const port = process.env.PORT || 5000;
 const ConnectDB = require('./src/db/connectDB')
 const corsOptions = {
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://execuflow.netlify.app'],
     credentials: true,
     optionSuccessStatus: 200
 }
@@ -67,6 +67,29 @@ ConnectDB()
                 {upsert: true, new: true}
             )
             res.send({message:'succeed'})
+          }
+          catch(err){
+            res.send(err)
+          }
+        })
+        app.get('/ongoing', async(req,res)=>{
+            try{
+               const onGointTask = await Task.find({status: 'ongoing'});
+               res.send(onGointTask)
+            }catch(err){
+                res.send({message: 'Something went worong'})
+            }
+        })
+        app.patch('/ongointask/:id', async (req, res) => {
+          try{
+            const taskId = req.params.id;
+            console.log(taskId)  
+            const updatedTask = await Task.findOneAndUpdate(
+                {_id: taskId},
+                {status: 'ongoing'},
+                {upsert: true, new: true}
+            )
+            console.log(updatedTask)
           }
           catch(err){
             res.send(err)
